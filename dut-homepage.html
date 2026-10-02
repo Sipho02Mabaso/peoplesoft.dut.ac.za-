@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homepage - Durban University of Technology</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:#eff1f6;font-family:Arial,Helvetica,sans-serif;color:#161513;min-height:100vh}
+  button{font-family:inherit}
+
+  /* top bar */
+  .top{background:#1b2636;height:43px;display:flex;align-items:center;padding:0 12px 0 4px;gap:10px}
+  .brand{display:flex;align-items:center;width:60px;flex:none}
+  .brand svg{width:26px;height:28px}
+  .brand i{display:block;width:1px;height:22px;background:#6b7686;margin-left:14px}
+  .search{flex:1;display:flex;justify-content:center}
+  .sg{display:flex;width:100%;max-width:660px;height:35px;border:1px solid #5b6575;border-radius:4px;overflow:hidden;background:#1b2636}
+  .sg .menu{background:#1b2636;color:#fff;border:0;font-weight:bold;font-size:14px;padding:0 14px;display:flex;align-items:center;gap:8px;cursor:pointer;flex:none}
+  .sg input{flex:1;min-width:0;border:0;padding:0 14px;font-size:15px;outline:0;background:#fff}
+  .sg input::placeholder{color:#6a6f78}
+  .sg .go{width:34px;background:#1b2636;border:0;border-left:1px solid #5b6575;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+  .tools{display:flex;align-items:center;gap:20px;flex:none;width:60px;justify-content:flex-end}
+  .tools button{background:none;border:0;padding:0;cursor:pointer;display:flex}
+  .strip{height:8px;background:
+    repeating-linear-gradient(90deg,#c9633a 0 14px,#e9a640 14px 30px,#7a5444 30px 40px,#e0cfae 40px 58px,#b8452f 58px 70px,#8d9a7a 70px 84px)}
+
+  /* sub bar */
+  .sub{height:46px;border-bottom:1px solid #8a8f98;display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 23px;position:sticky;top:0;background:#eff1f6;z-index:2}
+  .sub h1{margin:0;font-size:20px;font-weight:bold;color:#1b2636;display:flex;align-items:center;gap:6px}
+  .pager{display:flex;align-items:center;gap:14px;font-size:14px;color:#1b2636}
+  .pager .dis{color:#b0b5bd}
+  .pager button{background:none;border:0;padding:0;cursor:pointer;display:flex}
+
+  /* tiles */
+  .wrap{max-width:1126px;margin:0 auto;padding:42px 20px 40px}
+  .grid{display:grid;grid-template-columns:repeat(4,250px);gap:43px 42px;justify-content:center}
+  .tile{position:relative;height:197px;background:#fff;border:1px solid #868c96;border-radius:4px;text-decoration:none;color:#1b5aa0;display:flex;flex-direction:column;align-items:center;padding-top:6px}
+  .tile:hover{box-shadow:0 2px 10px rgba(0,0,0,.18);border-color:#5d6470}
+  .tile h2{margin:0;font-size:14px;font-weight:bold;text-align:center;line-height:17px;padding:0 4px}
+  .tile svg.ic{width:80px;height:80px;margin-top:22px;flex:none}
+  .stat{position:absolute;bottom:7px;left:0;right:0;text-align:center;font-size:14px;color:#000;display:flex;justify-content:center;align-items:baseline;gap:5px}
+  .stat b{color:#9a4a2a;font-size:18px}
+  .stat b + span + b{margin-left:6px}
+  .warn{width:12px;height:12px;background:#cc3030;border-radius:2px;color:#fff;font-size:10px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;align-self:center}
+
+  @media (max-width:1100px){
+    .grid{grid-template-columns:repeat(3,minmax(0,250px));gap:30px}
+  }
+  .mfoot{display:none;position:fixed;left:0;right:0;bottom:0;height:46px;background:#fff;border-top:2px solid #8a8f98;align-items:center;justify-content:center;gap:82px;z-index:5}
+  .mfoot svg{display:block}
+  .msearch{display:none}
+  @media (max-width:700px){
+    body{padding-bottom:46px}
+    .top{height:45px;padding:0 14px 0 3px}
+    .brand{width:auto}.brand i{display:none}.brand svg{width:30px;height:34px}
+    .search{display:none}
+    .tools{margin-left:auto;width:auto;gap:26px}
+    .tools .home{display:none}.tools .msearch{display:flex}
+    .sub{flex-direction:column;align-items:stretch;height:auto;padding:0;position:static}
+    .sub h1{align-self:flex-start;margin:10px 0 0 14px;padding:9px 12px;border:2px solid #8bbcf5;font-size:20px;gap:14px}
+    .pager{display:grid;grid-template-columns:1fr auto 1fr;height:46px;padding:0 24px 0 28px;margin-top:8px;border-bottom:1px solid #8a8f98;font-size:16px}
+    .pager button:nth-of-type(2){justify-self:end}
+    .pager .kebab{display:none}
+    .wrap{padding:16px 44px 30px}
+    .grid{grid-template-columns:1fr;gap:11px}
+    .tile{height:119px;align-items:stretch;padding-top:4px}
+    .tile h2{text-align:left;font-size:14px;padding:0 6px}
+    .tile svg.ic{width:56px;height:56px;margin:8px auto 0}
+    .stat{font-size:14px;bottom:5px}.stat b{font-size:18px}
+    .mfoot{display:flex}
+  }
+  #kmenu{position:fixed;z-index:50;min-width:170px;background:#fff;border:1px solid #b9b7b3;border-radius:3px;box-shadow:0 3px 10px rgba(0,0,0,.28)}
+  #kmenu button{display:block;width:100%;text-align:left;background:none;border:0;padding:0 18px;height:40px;font:14px Arial,Helvetica,sans-serif;color:#161513;cursor:pointer}
+  #kmenu button:hover{background:#f1efec}
+  .kopen{background:#5b6575!important;border-radius:50%;box-shadow:0 0 0 7px #5b6575}
+</style>
+<script src="users.js"></script>
+</head>
+<body>
+
+<!-- reusable icon parts -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="doc" viewBox="0 0 80 80">
+      <path d="M12 6h34l14 14v50H12z" fill="#3a97dd"/><path d="M12 6l14 14H12z" fill="#cfe3f5"/><path d="M28 6h18v14H28z" fill="#1b2a50" opacity=".0"/>
+      <g stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M20 30h24M20 38h24M20 46h12"/></g>
+    </symbol>
+    <symbol id="grad" viewBox="0 0 30 30">
+      <circle cx="15" cy="15" r="14" fill="#fff" stroke="#3b4658" stroke-width="2"/>
+      <ellipse cx="15" cy="14" rx="5" ry="6" fill="#e8b24e"/><path d="M4 28c1-8 6-9 11-9s10 1 11 9a14 14 0 0 1-22 0z" fill="#cf3b2e"/>
+      <path d="M8 9l7-3 7 3-7 3z" fill="#2f3d54"/>
+    </symbol>
+    <symbol id="person" viewBox="0 0 40 40">
+      <circle cx="20" cy="13" r="8" fill="#fff" stroke="#3b4658" stroke-width="2"/><path d="M4 37c0-9 7-12 16-12s16 3 16 12z" fill="#fff" stroke="#3b4658" stroke-width="2"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="top">
+    <div class="brand">
+      <svg viewBox="0 0 26 28"><polygon points="0,1 12,1 0,9" fill="#7fb5b5"/><polygon points="12,1 24,1 12,9" fill="#8a2a7b"/><polygon points="12,9 24,9 12,17" fill="#4a68a8"/><polygon points="0,9 12,9 0,17" fill="#cf2230"/><polygon points="12,17 24,17 12,26" fill="#a878b8"/></svg>
+      <i></i>
+    </div>
+    <div class="search">
+      <div class="sg">
+        <button class="menu" type="button"><span class="t">Menu</span>
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,1.5 6,6 10.5,1.5"/></svg></button>
+        <input type="text" placeholder="Search in Menu" aria-label="Search in Menu">
+        <button class="go" type="button" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L15 15"/></svg></button>
+      </div>
+    </div>
+    <div class="tools">
+      <button type="button" class="msearch" aria-label="Search"><svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L15 15"/></svg></button>
+      <button type="button" class="home" aria-label="Home"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 9l8-7 8 7v11H3z"/></svg></button>
+      <button type="button" aria-label="More"><svg width="6" height="20" viewBox="0 0 6 20" fill="#fff"><circle cx="3" cy="3" r="2.2"/><circle cx="3" cy="10" r="2.2"/><circle cx="3" cy="17" r="2.2"/></svg></button>
+    </div>
+  </div>
+  <div class="strip"></div>
+</header>
+
+<div class="sub">
+  <h1>Homepage
+    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="#1b2636" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,2 7,7 12,2"/></svg></h1>
+  <div class="pager">
+    <button class="dis" aria-label="Previous"><svg width="8" height="13" viewBox="0 0 8 13" fill="none" stroke="#b0b5bd" stroke-width="1.8" stroke-linecap="round"><polyline points="6.5,1.5 1.5,6.5 6.5,11.5"/></svg></button>
+    <span>1 of 2</span>
+    <button aria-label="Next"><svg width="8" height="13" viewBox="0 0 8 13" fill="none" stroke="#1b2636" stroke-width="1.8" stroke-linecap="round"><polyline points="1.5,1.5 6.5,6.5 1.5,11.5"/></svg></button>
+    <button class="kebab" aria-label="Page options" style="margin-left:18px"><svg width="6" height="18" viewBox="0 0 6 20" fill="#1b2636"><circle cx="3" cy="3" r="2.2"/><circle cx="3" cy="10" r="2.2"/><circle cx="3" cy="17" r="2.2"/></svg></button>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid">
+
+    <a class="tile" href="#"><h2>Apply for Admission</h2>
+      <svg class="ic" viewBox="0 0 80 80"><use href="#doc" width="80" height="80"/><use href="#grad" x="44" y="40" width="32" height="32"/></svg></a>
+
+    <a class="tile" href="#"><h2>Admissions</h2>
+      <svg class="ic" viewBox="0 0 80 80"><use href="#doc" width="80" height="80"/><use href="#grad" x="44" y="40" width="32" height="32"/></svg>
+      <div class="stat"><b>2</b><span>active applications</span></div></a>
+
+    <a class="tile" href="#"><h2>Academic Records + Graduation</h2>
+      <svg class="ic" viewBox="0 0 80 80"><use href="#person" x="2" y="30" width="26" height="26"/><use href="#person" x="52" y="30" width="26" height="26"/><use href="#person" x="22" y="22" width="36" height="36"/>
+        <path d="M30 22l10-6 10 6-10 6z" fill="#f0c862" stroke="#6b5a2a" stroke-width="1.2"/><path d="M8 32l5-3 5 3-5 3zM62 32l5-3 5 3-5 3z" fill="#f0c862"/></svg></a>
+
+    <a class="tile" href="#"><h2>Financial Account</h2>
+      <svg class="ic" viewBox="0 0 80 80"><path d="M6 24L40 8l34 16z" fill="#c9ccd2"/><rect x="10" y="26" width="8" height="26" fill="#aeb2ba"/><rect x="24" y="26" width="8" height="26" fill="#aeb2ba"/><rect x="38" y="26" width="8" height="26" fill="#aeb2ba"/><rect x="52" y="26" width="8" height="26" fill="#aeb2ba"/><rect x="6" y="52" width="60" height="5" fill="#c9ccd2"/>
+        <ellipse cx="54" cy="64" rx="14" ry="9" fill="#e8b24e"/><ellipse cx="68" cy="66" rx="7" ry="5" fill="#f0c862"/><circle cx="55" cy="50" r="4" fill="#b8892f"/></svg>
+      <div class="stat"><span class="warn">!</span><span>Payment Due</span></div></a>
+
+    <a class="tile" href="#"><h2>Financial Aid</h2>
+      <svg class="ic" viewBox="0 0 80 80"><path d="M10 74c0-16 8-22 22-22s22 6 22 22z" fill="#cf3b2e"/><ellipse cx="32" cy="38" rx="11" ry="14" fill="#e8b24e"/><path d="M12 24l22-10 22 10-22 10z" fill="#2f3d54"/><rect x="40" y="56" width="34" height="20" rx="2" fill="#1fb08a"/><circle cx="57" cy="66" r="4" fill="#fff"/></svg></a>
+
+    <a class="tile" href="#"><h2>View My Timetable</h2>
+      <svg class="ic" viewBox="0 0 80 80"><rect x="8" y="12" width="52" height="52" rx="4" fill="#fff" stroke="#3b4658" stroke-width="2.4"/><path d="M8 16a4 4 0 0 1 4-4h44a4 4 0 0 1 4 4v8H8z" fill="#e88b92" stroke="#3b4658" stroke-width="2.4"/><path d="M20 6v12M48 6v12" stroke="#3b4658" stroke-width="3" stroke-linecap="round"/>
+        <g fill="none" stroke="#3b4658" stroke-width="2"><rect x="16" y="32" width="8" height="7"/><rect x="30" y="32" width="8" height="7"/><rect x="44" y="32" width="8" height="7"/><rect x="16" y="46" width="8" height="7"/><rect x="30" y="46" width="8" height="7"/></g>
+        <circle cx="56" cy="58" r="17" fill="#f6e3a1" stroke="#3b4658" stroke-width="2.4"/><path d="M56 48v10l7 4" fill="none" stroke="#3b4658" stroke-width="2.4" stroke-linecap="round"/></svg></a>
+
+    <a class="tile" href="#"><h2>Registration</h2>
+      <svg class="ic" viewBox="0 0 80 80"><rect x="6" y="14" width="56" height="56" rx="3" fill="#fff" stroke="#2a7cbf" stroke-width="4"/><rect x="6" y="14" width="56" height="12" fill="#2a7cbf"/><path d="M18 8v12M50 8v12" stroke="#2a7cbf" stroke-width="5" stroke-linecap="round"/>
+        <g fill="#4aa6e0"><rect x="14" y="34" width="8" height="7"/><rect x="28" y="34" width="8" height="7"/><rect x="42" y="34" width="8" height="7"/><rect x="14" y="48" width="8" height="7"/><rect x="42" y="48" width="8" height="7"/></g><rect x="28" y="48" width="8" height="7" fill="#e5473a"/><rect x="28" y="34" width="8" height="7" fill="#e5473a"/>
+        <path d="M50 78c0-8 4-11 11-11s11 3 11 11z" fill="#cf3b2e"/><ellipse cx="61" cy="58" rx="6" ry="8" fill="#e8b24e"/><path d="M50 52l11-5 11 5-11 5z" fill="#2f3d54"/></svg></a>
+
+    <a class="tile" href="#"><h2>Profile</h2>
+      <svg class="ic" viewBox="0 0 80 80"><use href="#person" x="6" y="8" width="62" height="62"/><path d="M60 68l4-12 16-18 8 8-18 18z" transform="translate(-14 4) scale(.85)" fill="#e0e3e8" stroke="#3b4658" stroke-width="2.4" stroke-linejoin="round"/><path d="M50 70l2-8 6 6z" fill="#3b4658"/></svg></a>
+
+    <a class="tile" href="#"><h2>Tasks</h2>
+      <svg class="ic" viewBox="0 0 80 80"><path d="M40 8L74 68H6z" fill="#fae09b" stroke="#3b4658" stroke-width="2.6" stroke-linejoin="round"/><rect x="36.5" y="28" width="7" height="22" rx="3" fill="#3b4658"/><circle cx="40" cy="58" r="4" fill="#3b4658"/></svg>
+      <div class="stat"><b>2</b><span>To Dos</span><b>1</b><span>Holds</span></div></a>
+
+    <a class="tile" href="dut-residence-status.html"><h2>Residence Self Service</h2>
+      <svg class="ic" viewBox="0 0 80 80"><use href="#person" x="26" y="2" width="28" height="28"/><use href="#person" x="6" y="42" width="28" height="28"/><use href="#person" x="46" y="42" width="28" height="28"/><circle cx="40" cy="42" r="4" fill="#9fd0f0" stroke="#3b4658" stroke-width="1.6"/><path d="M40 30v8M36 45l-8 0M44 45l8 0" stroke="#3b4658" stroke-width="1.6"/></svg></a>
+
+    <a class="tile" href="#"><h2>Faculty Student Forms</h2>
+      <svg class="ic" viewBox="0 0 80 80"><rect x="10" y="10" width="46" height="62" rx="3" fill="#e7e9ec" stroke="#aeb2ba" stroke-width="2"/><rect x="18" y="6" width="46" height="62" rx="3" fill="#fff" stroke="#aeb2ba" stroke-width="2"/><path d="M18 6h16L18 22z" fill="#8cc4ec"/>
+        <path d="M46 20l4 4 8-9" fill="none" stroke="#1fb08a" stroke-width="3" stroke-linecap="round"/><g stroke="#aeb2ba" stroke-width="3" stroke-linecap="round"><path d="M26 32h22M26 42h22"/></g><rect x="26" y="50" width="32" height="8" fill="none" stroke="#aeb2ba" stroke-width="2"/></svg></a>
+
+  </div>
+</main>
+<div class="mfoot">
+  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#3b4658" stroke-width="2.2" stroke-linecap="round"><circle cx="13" cy="13" r="10.5"/><path d="M13 6v7l5 3"/></svg>
+  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#3b4658" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="13" r="10.5"/><circle cx="13" cy="7.5" r="1.4" fill="#3b4658"/><path d="M6.5 10.5l6.5 1.5 6.5-1.5M13 12v5M13 17l-3 4.5M13 17l3 4.5"/></svg>
+</div>
+<script>
+  var me = DUTAuth.require();
+  function closeKMenu() {
+    var m = document.getElementById('kmenu'); if (m) m.remove();
+    document.querySelectorAll('.kopen').forEach(function (b) { b.classList.remove('kopen'); });
+  }
+  document.querySelectorAll('[aria-label="More"]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var wasOpen = btn.classList.contains('kopen');
+      closeKMenu(); if (wasOpen) return;
+      var m = document.createElement('div'); m.id = 'kmenu';
+      [['New Window', function () { window.open(location.href, '_blank'); }],
+       ['Help', function () { alert('Help is not available in this prototype.'); }],
+       ['Sign Out', function () { DUTAuth.logout(); }]].forEach(function (i) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = i[0];
+        b.addEventListener('click', function () { closeKMenu(); i[1](); });
+        m.appendChild(b);
+      });
+      var r = btn.getBoundingClientRect();
+      m.style.top = (r.bottom + 8) + 'px'; m.style.right = '8px';
+      document.body.appendChild(m); btn.classList.add('kopen');
+    });
+  });
+  document.addEventListener('click', closeKMenu);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeKMenu(); });
+</script>
+</body>
+</html>

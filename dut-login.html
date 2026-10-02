@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign In - Durban University of Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #f1f3f8;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #161513;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 12px;
+  }
+  .card {
+    width: 799px;
+    max-width: 100%;
+    height: 598px;
+    flex: none;
+    margin: 0;
+    background: #fff;
+    border: 1px solid #d9dce3;
+    border-top: 8px solid #559dfa;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.10);
+    position: relative;
+  }
+  .logo { display: block; margin: 54px auto 0; width: 574px; max-width: 90%; height: auto; }
+  .form { width: 592px; max-width: 86%; margin: 68px auto 0; }
+  label { display: block; font-size: 16px; line-height: 20px; margin-bottom: 4px; }
+  input[type=text], input[type=password] {
+    width: 100%; height: 38px;
+    border: 1px solid #7a828e; border-radius: 3px;
+    padding: 0 10px; font-size: 16px; background: #fff;
+  }
+  input[type=text]:focus, input[type=password]:focus { outline: 2px solid #559dfa; outline-offset: 0; }
+  .field + .field { margin-top: 20px; }
+  .forgot { display: block; text-align: center; margin-top: 21px; font-size: 16px; color: #1a62c4; text-decoration: none; line-height: 20px; }
+  .forgot:hover { text-decoration: underline; }
+  .lang { margin-top: -2px; }
+  .select-wrap { position: relative; }
+  select {
+    appearance: none; -webkit-appearance: none;
+    width: 100%; height: 38px;
+    border: 1px solid #7a828e; border-radius: 3px;
+    padding: 0 36px 0 8px; font-size: 16px; font-weight: bold;
+    background: #fff; color: #000; font-family: Arial, Helvetica, sans-serif;
+  }
+  .select-wrap svg { position: absolute; right: 10px; top: 12px; pointer-events: none; }
+  .btn {
+    display: block; width: 100%; height: 40px; margin-top: 32px;
+    background: #2370c9; color: #fff; border: 0; border-radius: 4px;
+    font-size: 16px; font-weight: bold; cursor: pointer; letter-spacing: .3px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .btn:hover { background: #1d62b2; }
+  .reader { display: flex; justify-content: center; align-items: center; margin-top: 20px; font-size: 16px; }
+  .reader input { margin: 0 4px 0 0; width: 13px; height: 13px; }
+  .reader label { margin: 0; }
+  .copy { text-align: center; font-size: 12px; color: #6b6b6b; margin-top: 11px; }
+  @media (max-width:700px){
+    body{justify-content:flex-start;padding:0}
+    .card{width:100%;height:auto;flex:1 1 auto;border:0;border-top:8px solid #559dfa;border-radius:0;box-shadow:none;padding-bottom:30px}
+    .logo{width:calc(100% - 12px);max-width:none;margin:45px 6px 0}
+    .form{width:calc(100% - 32px);max-width:none;margin-top:58px}
+    .copy{padding:0 0 4px;margin-top:0;background:#fff}
+  }
+  .err{color:#c0392b;font-size:14px;text-align:center;margin-top:14px;min-height:0}
+</style>
+<script src="users.js"></script>
+</head>
+<body>
+  <div class="card">
+    <svg class="logo" viewBox="0 0 574 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DUT Durban University of Technology">
+      <polygon points="0,2 30,2 0,22" fill="#7fb5b5"/>
+      <polygon points="29,2 58,2 58,32 " fill="#8a2a7b" transform="translate(0,0)"/>
+      <polygon points="58,2 88,2 58,22 " fill="#1b8a4a"/>
+      <polygon points="29,32 58,32 29,2" fill="#cf2230" opacity="0"/>
+      <polygon points="29,32 58,32 58,62" fill="#cf2230" opacity="0"/>
+      <polygon points="29,22 58,22 29,2" fill="#8a2a7b"/>
+      <polygon points="29,22 58,22 29,42" fill="#cf2230"/>
+      <polygon points="58,22 88,22 88,2" fill="#1b8a4a" opacity="0"/>
+      <polygon points="58,22 88,22 58,42" fill="#4a68a8"/>
+      <polygon points="58,42 88,42 58,62" fill="#a878b8"/>
+      <text x="104" y="62" font-family="Oswald, Impact, 'Arial Narrow', sans-serif" font-weight="700" font-size="84" fill="#231f20" textLength="136" lengthAdjust="spacingAndGlyphs">DUT</text>
+      <text x="251" y="26" font-family="Oswald, 'Arial Narrow', Arial, sans-serif" font-weight="600" font-size="24" fill="#231f20" textLength="323" lengthAdjust="spacingAndGlyphs">DURBAN UNIVERSITY OF TECHNOLOGY</text>
+      <rect x="251" y="32" width="323" height="2" fill="#231f20"/>
+      <text x="251" y="58" font-family="Oswald, 'Arial Narrow', Arial, sans-serif" font-weight="600" font-size="22" fill="#231f20" textLength="323" lengthAdjust="spacingAndGlyphs">INYUVESI YASETHEKWINI YEZOBUCHWEPHESHE</text>
+    </svg>
+
+    <form class="form" id="loginForm" autocomplete="off">
+      <div class="field">
+        <label for="userid">User ID</label>
+        <input type="text" id="userid" name="userid">
+      </div>
+      <div class="field">
+        <label for="pwd">Password</label>
+        <input type="password" id="pwd" name="pwd">
+      </div>
+
+      <a href="#" class="forgot">Forgot your password?</a>
+
+      <div class="lang">
+        <label for="lang">Select a Language</label>
+        <div class="select-wrap">
+          <select id="lang" name="lang">
+            <option selected>English</option>
+            <option>isiZulu</option>
+            <option>Afrikaans</option>
+          </select>
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,3 8,9 14,3"/></svg>
+        </div>
+      </div>
+
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn" type="submit">Sign In</button>
+
+      <div class="reader">
+        <input type="checkbox" id="sr">
+        <label for="sr">Enable Screen Reader Mode</label>
+      </div>
+    </form>
+  </div>
+  <div class="copy">Copyright © 2000, 2024, Oracle and/or its affiliates.</div>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var err = document.getElementById('err');
+    err.textContent = '';
+    try {
+      var r = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: document.getElementById('userid').value,
+          password: document.getElementById('pwd').value
+        })
+      });
+      if (r.ok) { location.href = '/dut-homepage.html'; }
+      else { err.textContent = 'Your User ID and/or Password are invalid.'; }
+    } catch (x) {
+      err.textContent = 'Cannot reach the server. Is app.py running?';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status of Applications - Residence Self Service</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{font-family:Arial,Helvetica,sans-serif;color:#161513;background:#fff;font-size:14px;display:flex;flex-direction:column;min-height:100vh}
+  button{font-family:inherit}
+
+  .top{background:#1b2636;height:39px;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 0;gap:10px;flex:none}
+  .hp{margin-left:1px;height:33px;background:#1b2636;border:1px solid #5b6575;border-radius:3px;color:#fff;font-weight:bold;font-size:13px;display:flex;align-items:center;gap:7px;padding:0 10px;cursor:pointer;flex:none}
+  .sbox{flex:1;max-width:260px;height:30px;background:#3b3b3b;border:1px solid #8a8378;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 8px;color:#ddd;font-size:13px;margin:0 auto}
+  .sbox input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font-size:13px}
+  .sbox input::placeholder{color:#ddd}
+  .tools{display:flex;align-items:center;gap:20px;flex:none}
+  .tools button{background:none;border:0;padding:0;cursor:pointer;display:flex}
+  .strip{height:8px;flex:none;background:repeating-linear-gradient(90deg,#4e7f86 0 16px,#e9a640 16px 30px,#7a5444 30px 44px,#e0cfae 44px 60px,#c9633a 60px 76px,#2f5a66 76px 92px)}
+
+  .title{background:#f0efee;height:46px;display:flex;align-items:center;padding:0 7px;font-size:18px;font-weight:bold;color:#111;flex:none;border-bottom:1px solid #d6d4d1}
+
+  .layout{display:flex;flex:1;min-height:0}
+  .side{width:257px;flex:none;background:#faf9f8;border-right:1px solid #b9b7b3;position:relative}
+  .side a{display:flex;align-items:center;gap:8px;height:46px;padding:0 7px;border-bottom:1px solid #d6d4d1;color:#1b2636;text-decoration:none;font-size:14px;white-space:nowrap}
+  .side a:hover{background:#f1efec}
+  .side a.on{background:#f9dfbd;border:2px solid #a0522d;font-weight:bold;margin:0 -1px}
+  .side svg{width:22px;height:22px;flex:none}
+  .handle{position:absolute;right:-21px;top:252px;width:21px;height:46px;background:#1b2636;border:0;border-radius:0 23px 23px 0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;padding:0 0 0 2px}
+  .layout.collapsed .side{display:none}
+  .layout.collapsed .handle-out{left:0}
+  .handle-out{display:none}
+  .layout.collapsed .handle-out{display:flex;position:fixed;top:337px;left:0;width:21px;height:46px;background:#1b2636;border:0;border-radius:0 23px 23px 0;color:#fff;cursor:pointer;align-items:center;justify-content:center;z-index:3}
+
+  .content{flex:1;min-width:0;padding:12px 17px 30px 21px}
+  .content h2{margin:0;font-size:14px;font-weight:bold;color:#9a4a2a;padding:0 0 3px;border-bottom:1px solid #c7c5c2;margin-bottom:10px}
+  .info{display:grid;grid-template-columns:342px 1fr;row-gap:12px;font-size:14px;margin-bottom:12px}
+  .info .l{text-align:right;padding-right:11px;color:#58595b;font-weight:bold}
+  .rows{text-align:right;font-weight:bold;font-size:12px;margin:0 0 4px}
+
+  .box{border:1px solid #b9b7b3;border-bottom:2px solid #b9b7b3;background:#fff}
+  .bar{display:flex;justify-content:flex-end;gap:8px;padding:5px 3px 5px;border-bottom:1px solid #d6d4d1}
+  .ib{width:30px;height:30px;border:1px solid #868c96;border-radius:4px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .ib:hover{background:#f1efec}
+  .tw{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:820px}
+  th{background:#faf9f8;text-align:left;font-size:14px;color:#2b2b2b;padding:0 6px;height:33px;border-bottom:1px solid #d6d4d1;white-space:nowrap}
+  th span{color:#7a7f87;font-size:12px;font-weight:normal;margin-left:3px}
+  td{padding:0 6px;height:43px;border-bottom:1px solid #d6d4d1;font-size:14px;color:#161513}
+  tr:last-child td{border-bottom:0}
+  .ci{display:inline-block;height:30px;padding:0 15px;background:#fff;border:1px solid #3b4658;border-radius:4px;color:#1b5aa0;font-size:14px;cursor:pointer;white-space:nowrap}
+  .ci:hover{background:#eef4fb}
+
+  .mtop1,.mtop2{display:none;background:#1b2636;color:#fff;align-items:center;flex:none}
+  .mtop1{height:45px;padding:0 14px 0 12px;gap:14px}
+  .mtop1 button,.mtop2 .ic2 button{background:none;border:0;padding:0;display:flex;cursor:pointer}
+  .mtop1 i{width:1px;height:22px;background:#6b7686}
+  .mtop1 span{font-size:20px;flex:1}
+  .mtop2{height:36px;padding:0 12px 0 3px;gap:10px}
+  .mtop2 .bk{height:28px;border:1px solid #5b6575;border-radius:3px;background:none;color:#fff;font-size:11.5px;display:flex;align-items:center;gap:5px;padding:0 8px;cursor:pointer;flex:none}
+  .mtop2 span{font-size:13px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mtop2 .ic2{display:flex;gap:16px}
+  @media (max-width:800px){
+    .top,.title,.handle,.handle-out,.layout.collapsed .handle-out{display:none!important}
+    .layout{display:block}
+    body.v-menu .mtop1,body.v-page .mtop2{display:flex}
+    body.v-menu .content{display:none}
+    body.v-page .side{display:none!important}
+    .side{width:100%;display:block;border:0;background:#fff;overflow:visible}
+    .side a,.side a.on{height:54px;font-size:16px;gap:14px;padding:0 14px 0 10px;border:0;border-bottom:2px solid #bdbbb7;color:#161513;background:none;font-weight:normal;margin:0}
+    .side svg{width:26px;height:26px}
+    .content{display:block;padding:0;overflow-x:auto}
+    .inner{min-width:760px;padding:6px 10px 30px}
+    .content h2{font-size:12px;margin-bottom:8px}
+    .info{grid-template-columns:118px 1fr;row-gap:9px;font-size:11.5px;margin-bottom:14px}
+    .rows{font-size:10px}
+    table{min-width:0}
+    th,td{font-size:11.5px;height:30px}
+    .ci{height:24px;font-size:11.5px;padding:0 12px}
+    .ib{width:24px;height:24px}
+  }
+  #kmenu{position:fixed;z-index:50;min-width:170px;background:#fff;border:1px solid #b9b7b3;border-radius:3px;box-shadow:0 3px 10px rgba(0,0,0,.28)}
+  #kmenu button{display:block;width:100%;text-align:left;background:none;border:0;padding:0 18px;height:40px;font:14px Arial,Helvetica,sans-serif;color:#161513;cursor:pointer}
+  #kmenu button:hover{background:#f1efec}
+  .kopen{background:#5b6575!important;border-radius:50%;box-shadow:0 0 0 7px #5b6575}
+</style>
+<script src="users.js"></script>
+</head>
+<body class="v-menu">
+
+<div class="top">
+  <button class="hp" type="button"><svg width="12" height="12" viewBox="0 0 12 12" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9"/></svg><span>Homepage</span></button>
+  <div class="sbox"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#ddd" stroke-width="1.6" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L15 15"/></svg><input type="text" placeholder="Search in Menu" aria-label="Search in Menu"></div>
+  <div class="tools">
+    <button type="button" aria-label="Home"><svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 9l8-7 8 7v11H3z"/></svg></button>
+    <button type="button" aria-label="More"><svg width="6" height="20" viewBox="0 0 6 20" fill="#fff"><circle cx="3" cy="3" r="2.2"/><circle cx="3" cy="10" r="2.2"/><circle cx="3" cy="17" r="2.2"/></svg></button>
+  </div>
+</div>
+<div class="mtop1">
+  <button type="button" aria-label="Close"><svg width="26" height="26" viewBox="0 0 26 26" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 4l18 18M22 4L4 22"/></svg></button>
+  <i></i><span>Residence Self Service</span>
+  <button type="button" aria-label="More"><svg width="6" height="20" viewBox="0 0 6 20" fill="#fff"><circle cx="3" cy="3" r="2.2"/><circle cx="3" cy="10" r="2.2"/><circle cx="3" cy="17" r="2.2"/></svg></button>
+</div>
+<div class="mtop2">
+  <button class="bk" id="mback" type="button"><svg width="10" height="10" viewBox="0 0 12 12" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9"/></svg>Residence Self Service</button>
+  <span>My Residence History</span>
+  <div class="ic2">
+    <button type="button" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L15 15"/></svg></button>
+    <button type="button" aria-label="Home"><svg width="16" height="16" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 9l8-7 8 7v11H3z"/></svg></button>
+    <button type="button" aria-label="More"><svg width="4" height="16" viewBox="0 0 6 20" fill="#fff"><circle cx="3" cy="3" r="2.2"/><circle cx="3" cy="10" r="2.2"/><circle cx="3" cy="17" r="2.2"/></svg></button>
+  </div>
+</div>
+<div class="strip"></div>
+<div class="title">Residence Self Service</div>
+
+<div class="layout" id="layout">
+  <nav class="side">
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M3 2h9l4 4v13H3z" fill="#3a8fd8"/><path d="M12 2l4 4h-4z" fill="#cfe3f5"/><path d="M6 9h7M6 12h7M6 15h4" stroke="#fff" stroke-width="1.3"/><circle cx="17" cy="17" r="5.5" fill="#fff" stroke="#3b4658" stroke-width="1.3"/><circle cx="17" cy="15.4" r="2" fill="#e8b24e"/><path d="M12.9 21.3c.5-2.8 2-3.4 4.1-3.4s3.6.6 4.1 3.4a5.5 5.5 0 0 1-8.2 0z" fill="#cf3b2e"/></svg>Apply for Residence</a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="#3b4658" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3l3 11h8M10 14l-1 5M16 14l1 5M3 20q9 4 18 0"/></svg>My Residence Offers</a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="#3b4658" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3l3 11h8M10 14l-1 5M16 14l1 5M3 20q9 4 18 0"/></svg>Residence Comm Letters</a>
+    <a href="#" class="on"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="18" height="14" fill="#fff" stroke="#3a8fd8" stroke-width="1.6"/><rect x="2" y="4" width="18" height="4" fill="#3a8fd8"/><path d="M5 11h6M5 14h4" stroke="#3a8fd8" stroke-width="1.3"/><circle cx="17" cy="14" r="2.3" fill="#e8b24e"/><path d="M13.5 12.2l3.5-1.8 3.5 1.8-3.5 1.6z" fill="#2f3d54"/><path d="M12.8 22.5c.4-3 2-3.6 4.2-3.6s3.8.6 4.2 3.6z" fill="#cf3b2e"/></svg>Status of Applications</a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="#d12f2f" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg>Cancel Residence</a>
+    <a href="#"><svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" fill="#fff" stroke="#3a8fd8" stroke-width="1.6"/><rect x="2.5" y="4" width="19" height="4" fill="#3a8fd8"/><rect x="4.5" y="10" width="5" height="8" fill="#8cc4ec"/><path d="M12 11h7M12 14h7M12 17h5" stroke="#3a8fd8" stroke-width="1.2"/></svg>Transfer Request</a>
+    <a href="#"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="17" rx="1" fill="#ead9a8" stroke="#6b6b6b" stroke-width="1.2"/><rect x="7" y="2" width="6" height="4" rx=".8" fill="#3b4658"/><path d="M6 10h8M6 13h8M6 16h4" stroke="#8a8f98" stroke-width="1.1"/><circle cx="17" cy="17.5" r="5.2" fill="#2aa05a"/><path d="M14.4 17.5l2 2 3.4-3.8" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>My Inventory Check</a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M3 2h9l4 4v13H3z" fill="#3a8fd8"/><path d="M12 2l4 4h-4z" fill="#cfe3f5"/><path d="M6 9h7M6 12h7M6 15h4" stroke="#fff" stroke-width="1.3"/><circle cx="17" cy="17" r="5.5" fill="#fff" stroke="#3b4658" stroke-width="1.3"/><circle cx="17" cy="15.4" r="2" fill="#e8b24e"/><path d="M12.9 21.3c.5-2.8 2-3.4 4.1-3.4s3.6.6 4.1 3.4a5.5 5.5 0 0 1-8.2 0z" fill="#cf3b2e"/></svg>Log Incident / Service Request</a>
+    <button class="handle" type="button" aria-label="Collapse menu" onclick="document.getElementById('layout').classList.toggle('collapsed')"><svg width="10" height="14" viewBox="0 0 10 14" stroke="#fff" stroke-width="2"><path d="M3 1v12M7 1v12"/></svg></button>
+  </nav>
+  <button class="handle-out" type="button" aria-label="Expand menu" onclick="document.getElementById('layout').classList.toggle('collapsed')"><svg width="10" height="14" viewBox="0 0 10 14" stroke="#fff" stroke-width="2"><path d="M3 1v12M7 1v12"/></svg></button>
+
+  <main class="content"><div class="inner">
+    <h2>My Residence History</h2>
+    <div class="info">
+      <div class="l">ID</div><div id="uid"></div>
+      <div class="l">Name</div><div id="uname"></div>
+    </div>
+    <div class="rows" id="rows"></div>
+    <div class="box">
+      <div class="bar">
+        <button class="ib" type="button" aria-label="Download"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#3b4658" stroke-width="1.4"><rect x="1.5" y="1.5" width="10" height="11"/><path d="M4 5l4 4M8 5l-4 4M12 10v5M9.5 13l2.5 2 2.5-2"/></svg></button>
+        <button class="ib" type="button" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#3b4658" stroke-width="1.6" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L15 15"/></svg></button>
+        <button class="ib" type="button" aria-label="Sort"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#3b4658" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14V2M2 5l3-3 3 3M11 2v12M8 11l3 3 3-3"/></svg></button>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th>Year<span>⇅</span></th><th>Academic Plan<span>⇅</span></th><th>Residence<span>⇅</span></th><th>Room<span>⇅</span></th><th>Status<span>⇅</span></th><th>Check-in Letter</th>
+          </tr></thead>
+          <tbody id="tb">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div></main>
+</div>
+<script>
+  var B=document.body;
+  document.querySelectorAll('.side a').forEach(function(a){a.addEventListener('click',function(e){
+    e.preventDefault();
+    if(a.classList.contains('on')){B.className='v-page';window.scrollTo(0,0);}
+  });});
+  document.getElementById('mback').addEventListener('click',function(){B.className='v-menu';window.scrollTo(0,0);});
+</script>
+<script>
+  var me = DUTAuth.require();
+  if (me) {
+    document.getElementById('uid').textContent = me.userId;
+    document.getElementById('uname').textContent = me.name;
+    var list = me.history.slice().sort(function (a, b) { return b.year - a.year; });
+    document.getElementById('rows').textContent = list.length + (list.length === 1 ? ' row' : ' rows');
+    var tb = document.getElementById('tb');
+    list.forEach(function (r) {
+      var tr = document.createElement('tr');
+      [r.year, r.plan, r.residence, r.room, r.status].forEach(function (v) {
+        var td = document.createElement('td'); td.textContent = v; tr.appendChild(td);
+      });
+      var td = document.createElement('td');
+      if (r.checkInLetter) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'ci'; b.textContent = 'Check-in Letter';
+        b.addEventListener('click', function () { window.open('/letter/' + me.userId + '.pdf', '_blank'); });
+        td.appendChild(b);
+      }
+      tr.appendChild(td); tb.appendChild(tr);
+    });
+  }
+  function go(sel, fn) { document.querySelectorAll(sel).forEach(function (b) { b.addEventListener('click', fn); }); }
+  go('.hp, .mtop1 [aria-label="Close"], [aria-label="Home"]', function () { location.href = 'dut-homepage.html'; });
+  function closeKMenu() {
+    var m = document.getElementById('kmenu'); if (m) m.remove();
+    document.querySelectorAll('.kopen').forEach(function (b) { b.classList.remove('kopen'); });
+  }
+  document.querySelectorAll('[aria-label="More"]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var wasOpen = btn.classList.contains('kopen');
+      closeKMenu(); if (wasOpen) return;
+      var m = document.createElement('div'); m.id = 'kmenu';
+      [['New Window', function () { window.open(location.href, '_blank'); }],
+       ['Help', function () { alert('Help is not available in this prototype.'); }],
+       ['Sign Out', function () { DUTAuth.logout(); }]].forEach(function (i) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = i[0];
+        b.addEventListener('click', function () { closeKMenu(); i[1](); });
+        m.appendChild(b);
+      });
+      var r = btn.getBoundingClientRect();
+      m.style.top = (r.bottom + 8) + 'px'; m.style.right = '8px';
+      document.body.appendChild(m); btn.classList.add('kopen');
+    });
+  });
+  document.addEventListener('click', closeKMenu);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeKMenu(); });
+</script>
+</body>
+</html>
