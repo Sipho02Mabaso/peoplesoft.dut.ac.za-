@@ -20,7 +20,7 @@ USERS = {
         "name": "Thelumusa Adrian Hlongwane",
         "history": [
             {"year": 2026, "plan": "Diploma in Business Law",
-             "residence": "Alpine Res Male Block 3", "room": "R13209A",
+             "residence": "Alpine Res Male Block 1", "room": "R11209A",
              "status": "*Checked In", "checkInLetter": True},
             {"year": 2024, "plan": "Diploma in Business Law",
              "residence": "Four Seasons", "room": "FSNS1",
@@ -33,7 +33,7 @@ USERS = {
         "name": "Bongumenzi Dlomo",
         "history": [
             {"year": 2026, "plan": "Diploma in Information Communications Technology in Application Development",
-             "residence": "Alpine Res Male Block 3", "room": "R13213A",
+             "residence": "Alpine Res Male Block 1", "room": "R11213A",
              "status": "*Checked In", "checkInLetter": True},
             {"year": 2025, "plan": "Diploma in Information Communications Technology in Application Development",
              "residence": "Boombox Residence 85", "room": "209A",
@@ -46,7 +46,7 @@ USERS = {
         "name": "Makaphile Kuhlekwethu Kaunda",
         "history": [
             {"year": 2026, "plan": "Diploma in Internal Auditing",
-             "residence": "Alpine Res Male Block 3", "room": "R13214A",
+             "residence": "Alpine Res Male Block 1", "room": "R11214A",
              "status": "*Checked In", "checkInLetter": True},
             {"year": 2025, "plan": "Diploma in Internal Auditing",
              "residence": "Vilmitsre Brighton", "room": "1321",
@@ -59,10 +59,10 @@ USERS = {
         "name": "Siphosakhe Perfect Mgenge",
         "history": [
             {"year": 2026, "plan": "Bachelor of Engineering Technology in Industrial Engineering",
-             "residence": "Alpine Res Male Block 3", "room": "R13215A",
+             "residence": "Alpine Res Male Block 1", "room": "R11215A",
              "status": "*Checked In", "checkInLetter": True},
             {"year": 2025, "plan": "Bachelor of Engineering Technology in Industrial Engineering",
-             "residence": "Alpine Res Male Block 3", "room": "R13215A",
+             "residence": "Alpine Res Male Block 1", "room": "R11215A",
              "status": "Final Checkout", "checkInLetter": False},
         ],
     },        
@@ -72,7 +72,7 @@ USERS = {
         "name": "Mthobeki Daniel",
         "history": [
             {"year": 2026, "plan": "Bachelor in Construction Studies and Quantity Surveying",
-             "residence": "Alpine Res Male Block 3", "room": "R13202B",
+             "residence": "Alpine Res Male Block 1", "room": "R11202B",
              "status": "*Checked In", "checkInLetter": True},
         ],
     }, 
